@@ -7,7 +7,7 @@ public class AsciiLogo {
 
     private final OnLineListener mOnLineListener;
     private final Handler mHandler;
-    private final String[] mLines; // your 180×320 ASCII logo lines
+    private final String[] mLines;
 
     public AsciiLogo(OnLineListener listener, Handler handler, String[] lines) {
         mOnLineListener = listener;
@@ -16,16 +16,15 @@ public class AsciiLogo {
     }
 
     public void setReady() {
-        // Feed all lines to the renderer
+        // feed lines to renderer
         mHandler.post(() -> {
             for (String line : mLines) {
-                // Send each line to Runner's onLine()
                 mOnLineListener.onLine(this, line, Color.WHITE);
             }
         });
     }
 
     public void destroy() {
-        // Nothing to clean up for a static logo
+        // nothing to clean up for a static logo
     }
 }
