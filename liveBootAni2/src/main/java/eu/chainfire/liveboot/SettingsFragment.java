@@ -571,7 +571,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
                 "100",
                 "120",
                 "140",
-                "160"
+                "180"
         };
         prefLines = Pref.List(activity, catOptions, R.string.settings_lines_title, 0, R.string.settings_lines_title, settings.LINES.name, settings.LINES.defaultValue, lines, lines, true);
         

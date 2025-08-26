@@ -104,6 +104,8 @@ implements
     private Logcat mLogcat = null;
     private Dmesg mDmesg = null;  
     private Script mScript = null;
+
+    private AsciiLogo mLogo = null;
     
     private HandlerThread mHandlerThread = null;
     private Handler mHandler = null;
@@ -263,11 +265,16 @@ implements
         }
         
         // start logcat and dmesg
+        // nope, start custom boot logo script instead
         if (mRunScript == null) {
-            mLogcat = new Logcat(this, mLines * 4, logcatLevelOpts, logcatBufferOpts, logcatFormatOpt, mHandler);
-            mDmesg = new Dmesg(this, mLines * 4, dmesgOpts, mHandler);
+            //mLogcat = new Logcat(this, mLines * 4, logcatLevelOpts, logcatBufferOpts, logcatFormatOpt, mHandler);
+            //mDmesg = new Dmesg(this, mLines * 4, dmesgOpts, mHandler);
+
+            // load ascii logo into string array
+            mLogo = new AsciiLogo(this, mHandler, LogoData.LOGO);
         }
     }
+
 
     @Override
     protected void onDone() {
@@ -275,6 +282,7 @@ implements
         if (mLogcat != null) mLogcat.destroy();
         if (mDmesg != null) mDmesg.destroy();
         if (mScript != null) mScript.destroy();
+        if (mLogo != null) mLogo.destroy();
     }
     
     @Override
@@ -289,6 +297,7 @@ implements
         if (mRunScript == null) {
             if (mDmesg != null) mDmesg.setReady();
             if (mLogcat != null) mLogcat.setReady();
+            if (mLogo != null) mLogo.setReady();
         } else {        
             mScript = new Script(this, mRunScript);
         }
